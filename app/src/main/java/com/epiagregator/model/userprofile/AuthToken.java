@@ -10,13 +10,13 @@ import org.joda.time.DateTimeZone;
 public class AuthToken {
 
     private final String mToken;
-    private final DateTime mExpiresIn;
+    private final long mExpiresIn;
     private final String mType;
 
     public AuthToken(String type, String token, long expiresIn) {
         this.mType = type;
         this.mToken = token;
-        this.mExpiresIn = new DateTime(expiresIn, DateTimeZone.UTC);
+        this.mExpiresIn = expiresIn;
     }
 
     public String getToken() {
@@ -24,7 +24,7 @@ public class AuthToken {
     }
 
     public DateTime getExpiresIn() {
-        return mExpiresIn;
+        return new DateTime(mExpiresIn, DateTimeZone.UTC);
     }
 
     public String getType() {

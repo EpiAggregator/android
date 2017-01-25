@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.epiagregator.impls.UserProfilePersistance;
 import com.epiagregator.impls.webapi.OAuthInterceptor;
-import com.epiagregator.impls.webapi.providers.WebApiAccountProvider;
+import com.epiagregator.impls.webapi.providers.FakeWebApiAccountProvider;
 import com.epiagregator.model.persistance.Persistance;
 import com.epiagregator.model.persistance.userprofile.IUserProfilePersistance;
 import com.epiagregator.model.providers.Providers;
@@ -27,6 +27,7 @@ public class MainApplication extends Application {
         OAuthInterceptor oAuthInterceptor = new OAuthInterceptor(userProfilePersistance);
 
         Persistance.setUserProfilePersistance(userProfilePersistance);
-        Providers.setAccountProvider(new WebApiAccountProvider(oAuthInterceptor));
+
+        Providers.setAccountProvider(new FakeWebApiAccountProvider());
     }
 }

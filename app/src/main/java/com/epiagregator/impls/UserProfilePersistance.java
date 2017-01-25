@@ -39,7 +39,11 @@ public class UserProfilePersistance implements IUserProfilePersistance {
     @Override
     public void setActiveUserProfile(UserProfile userProfile) {
         SharedPreferences.Editor editor = mSharedPref.edit();
-        editor.putString(mContext.getString(R.string.shared_prefs_user_profile), mGson.toJson(userProfile));
-        editor.apply();
+        if (userProfile == null) {
+            editor.clear().apply();
+        } else {
+            editor.putString(mContext.getString(R.string.shared_prefs_user_profile), mGson.toJson(userProfile));
+            editor.apply();
+        }
     }
 }

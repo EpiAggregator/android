@@ -47,4 +47,8 @@ public class UserProfileService {
     public static void signOut() {
         Persistance.getUserProfilePersistance().setActiveUserProfile(null);
     }
+
+    public static UserProfile getActiveUserProfile() {
+        return Persistance.getUserProfilePersistance().getActiveUserProfile();
+    }
 }

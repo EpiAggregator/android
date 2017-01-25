@@ -43,7 +43,7 @@ public class SignInPresenterTest {
     public void login_Success() {
         doReturn(Observable.empty())
                 .when(mWebApiAccountProvider)
-                .signIn(any(SignInRequest.class));
+                .registerUser(any(SignInRequest.class));
 
         UserProfileService.loginUser(mSignInRequest, mMockSignInMvpView);
         verify(mMockSignInMvpView).showLoading();

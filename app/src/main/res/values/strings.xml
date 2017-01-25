@@ -21,9 +21,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="login_activity_sign_up_already_have_account"><u>Already have an account ? Sign In !</u></string>
-    <string name="login_activity_sign_in_create_account"><u>Don\'t have an account ? Sign Up !</u></string>
+    <string name="login_activity_sign_up_already_have_account">Already have an account ? <u>Sign In !</u></string>
+    <string name="login_activity_sign_in_create_account">Don\'t have an account ? <u>Sign Up !</u></string>
     <string name="prompt_password_confirm">Confirm password</string>
     <string name="error_invalid_password_matches">Pasword doesn\'t match</string>
     <string name="sign_in_email_already_exist">Email already exist</string>
+    <string name="activity_main_sign_out">Sign out</string>
 </resources>

@@ -1,17 +1,22 @@
 package com.epiagregator.screens.signin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.epiagregator.R;
 import com.epiagregator.impls.webapi.error.RetrofitException;
+import com.epiagregator.impls.webapi.model.SignInRequest;
 import com.epiagregator.model.userprofile.UserProfile;
+import com.epiagregator.model.userprofile.UserProfileService;
+import com.epiagregator.screens.MainActivity;
 
 import java.util.regex.Pattern;
 
@@ -54,6 +59,9 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         ButterKnife.bind(this);
     }
 
@@ -61,8 +69,11 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
     public void signIn(View v) {
         resetError(mSignInEmailInputLayout, mSignUpEmailInputLayout);
         if (checkEmail(mSignInEmailInputLayout) & checkPassword(mSignInPasswordInputLayout)) {
-            // TODO Sign in request
-            Toast.makeText(this, "Can sign in", Toast.LENGTH_LONG).show();
+            UserProfileService.loginUser(
+                    new SignInRequest(
+                            mSignInEmailInputLayout.getEditText().getText().toString(),
+                            mSignInPasswordInputLayout.getEditText().getText().toString())
+                    ,this);
         }
     }
 
@@ -71,7 +82,12 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
         resetError(mSignUpEmailInputLayout, mSignUpEmailInputLayout);
         if (checkEmail(mSignUpEmailInputLayout)
                 & checkPasswords(mSignUpPasswordInputLayout, mSignUpPasswordConfirmInputLayout)) {
-            // TODO Sign up request
+            UserProfileService.registerUser(
+                    new SignInRequest(
+                            mSignInEmailInputLayout.getEditText().getText().toString(),
+                            mSignInPasswordInputLayout.getEditText().getText().toString())
+                    ,this);
+
             Toast.makeText(this, "Can sign up", Toast.LENGTH_LONG).show();
         }
     }
@@ -136,12 +152,14 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
 
     @Override
     public void onResponse(UserProfile result) {
-
+        Toast.makeText(this, "User " + result.getUserEmail() + " connected", Toast.LENGTH_LONG).show();
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
     }
 
     @Override
     public void onError(RetrofitException exception) {
-
+        Toast.makeText(this, "An error occurred : " + exception.getMessage(), Toast.LENGTH_LONG).show();
     }
 }
 
