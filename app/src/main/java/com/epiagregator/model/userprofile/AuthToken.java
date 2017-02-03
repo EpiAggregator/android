@@ -9,26 +9,26 @@ import org.joda.time.DateTimeZone;
 
 public class AuthToken {
 
-    private final String mToken;
-    private final long mExpiresIn;
-    private final String mType;
+    private final String token;
+    private final long expiresIn;
+    private final String type;
 
     public AuthToken(String type, String token, long expiresIn) {
-        this.mType = type;
-        this.mToken = token;
-        this.mExpiresIn = expiresIn;
+        this.type = type;
+        this.token = token;
+        this.expiresIn = expiresIn;
     }
 
     public String getToken() {
-        return mToken;
+        return token;
     }
 
     public DateTime getExpiresIn() {
-        return new DateTime(mExpiresIn, DateTimeZone.UTC);
+        return new DateTime(expiresIn, DateTimeZone.UTC);
     }
 
     public String getType() {
-        return mType;
+        return type;
     }
 
     public boolean isExpired() {

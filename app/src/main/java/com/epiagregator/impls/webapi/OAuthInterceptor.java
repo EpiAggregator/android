@@ -1,5 +1,7 @@
 package com.epiagregator.impls.webapi;
 
+import android.util.Log;
+
 import com.epiagregator.model.persistance.userprofile.IUserProfilePersistance;
 import com.epiagregator.model.userprofile.AuthToken;
 import com.epiagregator.model.userprofile.UserProfile;
@@ -25,6 +27,8 @@ public class OAuthInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
+
+        Log.d("OAuthInterceptor", "Intercept call : " + chain.request().toString());
 
         if (mIUserProfilePersistance.isSignedIn()) {
             UserProfile userProfile = mIUserProfilePersistance.getActiveUserProfile();

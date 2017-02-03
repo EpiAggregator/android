@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_marginTop="8dp"
+    android:background="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:text="Omnibus profecto in sed Marcellum auctoritatem gloria laus paulo suspicionibus auctoritatem in ipso in summo tum maxime maximo beneficio et omnibus mihi cum cum multis tuo senatus iudicio mihi senatui maxime vel enim summo commemoratis senatus gloria rei reique cepit maximum et multis sit cepit summo laus cepit cum tuis."
+            android:layout_below="@+id/entry_title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/entry_description"
+            android:layout_alignRight="@+id/entry_like_button"
+            android:layout_alignEnd="@+id/entry_like_button" />
+
+        <com.like.LikeButton
+            android:id="@+id/entry_like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            app:anim_scale_factor="2"
+            app:icon_size="16dp"
+            app:icon_type="star"
+            app:liked="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+        </com.like.LikeButton>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:text="Lorem ipsum dolor si amet"
+            android:id="@+id/entry_title"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/entry_like_button"
+            android:layout_toStartOf="@+id/entry_like_button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:alpha="0.7"
+            android:text="John Doe • Il y a 3 heures"
+            android:layout_marginTop="8dp"
+            android:id="@+id/entry_header_info"
+            android:layout_below="@+id/entry_description"
+            android:layout_alignRight="@+id/entry_description"
+            android:layout_alignEnd="@+id/entry_description" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow_direction_down"/>
+
+</LinearLayout>

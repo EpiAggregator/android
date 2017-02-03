@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/login_activity_sign_up_email_text_input_layout">
 
-                        <EditText
+                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/login_activity_sign_up_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -108,6 +108,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:clickable="true"
                         android:id="@+id/login_activity_sign_up_already_have_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,7 +136,6 @@
                             android:hint="@string/prompt_email"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
-                            android:text="test@email.com"
                             android:singleLine="true" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -156,7 +156,6 @@
                             android:imeOptions="actionUnspecified"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:text="test"
                             android:singleLine="true" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -171,6 +170,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:clickable="true"
                         android:id="@+id/login_activity_sign_in_create_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

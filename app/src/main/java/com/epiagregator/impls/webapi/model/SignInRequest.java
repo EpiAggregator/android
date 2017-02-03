@@ -3,7 +3,7 @@ package com.epiagregator.impls.webapi.model;
 import com.google.gson.annotations.SerializedName;
 
 public class SignInRequest {
-    @SerializedName("username")
+    @SerializedName("email")
     private final String mEmail;
 
     @SerializedName("password")

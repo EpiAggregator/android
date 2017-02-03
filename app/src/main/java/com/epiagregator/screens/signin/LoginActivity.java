@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,8 +17,11 @@ import com.epiagregator.impls.webapi.error.RetrofitException;
 import com.epiagregator.impls.webapi.model.SignInRequest;
 import com.epiagregator.model.userprofile.UserProfile;
 import com.epiagregator.model.userprofile.UserProfileService;
-import com.epiagregator.screens.MainActivity;
+import com.epiagregator.screens.main.MainActivity;
+import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -30,6 +34,8 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity implements SignInMvpView {
 
     private static final String EMAIL_REGEXP = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     // SING IN UI
     @BindView(R.id.login_activity_sign_in_form)
@@ -63,43 +69,57 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-    }
 
-    @OnClick(R.id.login_activity_sign_in_button)
-    public void signIn(View v) {
-        resetError(mSignInEmailInputLayout, mSignUpEmailInputLayout);
-        if (checkEmail(mSignInEmailInputLayout) & checkPassword(mSignInPasswordInputLayout)) {
-            UserProfileService.loginUser(
-                    new SignInRequest(
-                            mSignInEmailInputLayout.getEditText().getText().toString(),
-                            mSignInPasswordInputLayout.getEditText().getText().toString())
-                    ,this);
-        }
-    }
+        Random random = new Random();
 
-    @OnClick(R.id.login_activity_sign_up_button)
-    public void signUp(View v) {
-        resetError(mSignUpEmailInputLayout, mSignUpEmailInputLayout);
-        if (checkEmail(mSignUpEmailInputLayout)
-                & checkPasswords(mSignUpPasswordInputLayout, mSignUpPasswordConfirmInputLayout)) {
-            UserProfileService.registerUser(
-                    new SignInRequest(
-                            mSignInEmailInputLayout.getEditText().getText().toString(),
-                            mSignInPasswordInputLayout.getEditText().getText().toString())
-                    ,this);
+        String email = "test" + random.nextInt(1000) + "@test.com";
+        String password = UUID.randomUUID().toString().substring(0, 6);
 
-            Toast.makeText(this, "Can sign up", Toast.LENGTH_LONG).show();
-        }
+        Log.d(TAG, "user mail : " + email);
+        Log.d(TAG, "user password : " + password);
+
+        mSignInEmailInputLayout.getEditText().setText(email);
+        mSignInPasswordInputLayout.getEditText().setText(password);
+        mSignUpEmailInputLayout.getEditText().setText(email);
+        mSignUpPasswordInputLayout.getEditText().setText(password);
+        mSignUpPasswordConfirmInputLayout.getEditText().setText(password);
+
+        RxView.clicks(findViewById(R.id.login_activity_sign_in_button))
+                .subscribe(aVoid -> {
+                    resetError(mSignInEmailInputLayout, mSignUpEmailInputLayout);
+                    if (checkEmail(mSignInEmailInputLayout) & checkPassword(mSignInPasswordInputLayout)) {
+                        UserProfileService.loginUser(
+                                new SignInRequest(
+                                        mSignInEmailInputLayout.getEditText().getText().toString(),
+                                        mSignInPasswordInputLayout.getEditText().getText().toString())
+                                , this);
+                    }
+                });
+
+        RxView.clicks(findViewById(R.id.login_activity_sign_up_button))
+                .subscribe(aVoid -> {
+                    resetError(mSignUpEmailInputLayout, mSignUpEmailInputLayout);
+                    if (checkEmail(mSignUpEmailInputLayout)
+                            & checkPasswords(mSignUpPasswordInputLayout, mSignUpPasswordConfirmInputLayout)) {
+                        UserProfileService.registerUser(
+                                new SignInRequest(
+                                        mSignUpEmailInputLayout.getEditText().getText().toString(),
+                                        mSignUpPasswordInputLayout.getEditText().getText().toString())
+                                ,this);
+
+                        Toast.makeText(this, "Can sign up", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @OnClick(R.id.login_activity_sign_up_already_have_account)
-    public void alreadyHaveAccount(View v) {
+    public void signInForm() {
         mSignUpForm.setVisibility(View.GONE);
         mSignInForm.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.login_activity_sign_in_create_account)
-    public void createAccount(View v) {
+    public void signUpForm() {
         mSignUpForm.setVisibility(View.VISIBLE);
         mSignInForm.setVisibility(View.GONE);
     }
@@ -152,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements SignInMvpView {
 
     @Override
     public void onResponse(UserProfile result) {
-        Toast.makeText(this, "User " + result.getUserEmail() + " connected", Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "User " + result.getUserEmail() + " connected", Toast.LENGTH_LONG).show();
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
     }
